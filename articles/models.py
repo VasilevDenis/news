@@ -17,7 +17,7 @@ class Article(models.Model):
     text = models.TextField(verbose_name='Текст')
     published_at = models.DateTimeField(verbose_name='Дата публикации')
     image = models.ImageField(null=True, blank=True, verbose_name='Изображение')
-    scopes = models.ManyToManyField(
+    tags = models.ManyToManyField(
         Tag,
         through="Scope",
         related_name='articles'
@@ -33,8 +33,8 @@ class Article(models.Model):
 
 
 class Scope(models.Model):
-    articles = models.ForeignKey(Article, on_delete=models.CASCADE)
-    tags = models.ForeignKey(Tag, on_delete=models.CASCADE)
+    articles = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='scopes')
+    tags = models.ForeignKey(Tag, on_delete=models.CASCADE, related_name='scopes')
     is_main = models.BooleanField()
 
 
